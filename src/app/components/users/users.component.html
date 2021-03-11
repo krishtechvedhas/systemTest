@@ -1,0 +1,61 @@
+<div class="container">
+
+  <div class="row">
+
+
+    <div class="col-md-8 m-auto form-container">
+      <div class="row searchBox">
+
+        <div class="col-sm">
+          <input [(ngModel)]="searchText" placeholder="Search.." class="advancedSearchTextbox">
+        </div>
+        <div class="col-sm">
+          <button type="button" class="btn btn-primary addButton addButton" (click)="addUser()">Add New User</button>
+        </div>
+      </div>
+
+      <table class="table table-bordered">
+        <thead>
+          <tr >
+            <th scope="col">
+              First Name
+              <img src="./assets/up-arrow-sort.png" *ngIf="showSort[0]" (click)="sortTable('asc','firstName',0, false)"/>
+              <img src="./assets/dwn-arw.png" *ngIf="!showSort[0]" (click)="sortTable('desc','-firstName', 0, false)"/>
+            </th>
+            <th scope="col">
+              Last Name
+              <img src="./assets/up-arrow-sort.png" *ngIf="showSort[1]" (click)="sortTable('asc','lastName',1, false)"/>
+              <img src="./assets/dwn-arw.png" *ngIf="!showSort[1]" (click)="sortTable('desc','-lastName', 1, false)"/>
+            </th>
+            <th scope="col">
+              Email
+              <img src="./assets/up-arrow-sort.png" *ngIf="showSort[2]" (click)="sortTable('asc','email',2, false)"/>
+              <img src="./assets/dwn-arw.png" *ngIf="!showSort[2]" (click)="sortTable('desc','-email', 2, false)"/>
+            </th>
+            <th scope="col">
+              MobileNumber
+              <img src="./assets/up-arrow-sort.png" *ngIf="showSort[3]" (click)="sortTable('asc','mobileNumber',3, false)"/>
+              <img src="./assets/dwn-arw.png" *ngIf="!showSort[3]" (click)="sortTable('desc','-mobileNumber', 3, false)"/>
+            </th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of usersData| paginate: config | grdFilter: {firstName: searchText, lastName:searchText,  email: searchText, mobileNumber: searchText}; index as i">
+            <td>
+              {{ item.firstName }}
+            </td>
+            <td>{{ item.lastName}}</td>
+            <td>{{ item.email }}</td>
+            <td>{{ item.mobileNumber }}</td>
+            <td>
+              <button class="btn btn-primary editButton" type="button" (click)="onEdit(item.id)">Edit</button>
+              <button class="btn btn-danger" type="button" (click)="deleteUser(item , i)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+    </div>
+  </div>
+</div>
